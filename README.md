@@ -14,7 +14,7 @@ I tried to describe as much as possible the steps I have done.
 
 Why
 -------------
-The results has a 14.14 RMSE, so it can't predict so well the gas consumptions, consecutevely I can't run a good outlier detection mechanism. In blue you see the gas consumption, in green the prediction:<br />
+The results has a 14.14 RMSE, so it can't predict so well the gas consumptions, consecutively I can't run a good outlier detection mechanism. In blue you see the gas consumption, in green the prediction:<br />
 <img src="https://i.imgur.com/sH0tPy6.png"><br />
 I see that in some papers that even if they predict daily or hourly consumption in the electric power, they have errors like <a href="https://www.sciencedirect.com/science/article/pii/0301421595001166">MSE = 0.01</a>.
 
@@ -25,3 +25,4 @@ Other steps in progress
 These are the steps I'm also trying. I tried them only for few hours. I'm reading various papers.
 * <a href="http://nbviewer.ipython.org/github/denadai2/Gas-consumption-outliers/blob/master/GES.ipynb">extreme studentized deviate (ESD)</a>
 * ARMA-ARIMA methods for time series
+* linear models - SVD comparison (in some days)
