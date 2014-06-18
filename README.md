@@ -10,7 +10,7 @@ Steps
 I tried to describe as much as possible the steps I have done.
 
 * <a href="http://nbviewer.ipython.org/github/denadai2/Gas-consumption-outliers/blob/master/1-Dataset.ipynb">Dataset description</a>
-* <a href="http://nbviewer.ipython.org/github/denadai2/Gas-consumption-outliers/blob/master/3-%20Regression_NN.ipynb">Neural newtork predictions</a>
+* <a href="http://nbviewer.ipython.org/github/denadai2/Gas-consumption-outliers/blob/master/3-%20Regression_NN.ipynb">Neural network predictions</a>
 
 Why
 -------------
