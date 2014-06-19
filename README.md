@@ -5,6 +5,11 @@ The goal of this project is to detect "anomalies", unusual events, in energy con
 
 Occupance data are extracted from calenders and the internet. The practical goal of this project is to find algorithms for reducing the consumption of fossile fuel and the CO2 production.
 
+What is an outlier
+-------------
+
+I'm looking for an unusual data point in a temporal series (e.g. sudden jump in the consumption), but also for an unusual pattern of changes (contiguous pattern indicative of a malfunction in the system).
+
 Steps
 -------------
 I tried to describe as much as possible the steps I have done.
@@ -14,7 +19,7 @@ I tried to describe as much as possible the steps I have done.
 
 Why
 -------------
-The results has a 14.14 RMSE, so it can't predict so well the gas consumptions, consecutively I can't run a good outlier detection mechanism. In blue you see the gas consumption, in green the prediction:<br />
+The results have 14.14 RMSE, so it can't predict so well the gas consumptions, consecutively I can't run a good outlier detection mechanism. In blue you see the gas consumption, in green the prediction:<br />
 <img src="https://i.imgur.com/sH0tPy6.png"><br />
 I see that in some papers that even if they predict daily or hourly consumption in the electric power, they have errors like <a href="https://www.sciencedirect.com/science/article/pii/0301421595001166">MSE = 0.01</a>.
 
