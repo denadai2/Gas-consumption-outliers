@@ -17,13 +17,6 @@ I tried to describe as much as possible the steps I have done.
 * <a href="http://nbviewer.ipython.org/github/denadai2/Gas-consumption-outliers/blob/master/1-Dataset.ipynb">Dataset description</a>
 * <a href="http://nbviewer.ipython.org/github/denadai2/Gas-consumption-outliers/blob/master/3-%20Regression_NN.ipynb">Neural network predictions</a>
 
-Why
--------------
-The results have 14.14 RMSE, so it can't predict so well the gas consumptions, consecutively I can't run a good outlier detection mechanism. In blue you see the gas consumption, in green the prediction:<br />
-<img src="https://i.imgur.com/sH0tPy6.png"><br />
-I see that in some papers that even if they predict daily or hourly consumption in the electric power, they have errors like <a href="https://www.sciencedirect.com/science/article/pii/0301421595001166">MSE = 0.01</a>.
-
-Why are my results so bad? What can I improve?
 
 Other steps in progress
 -------------
@@ -31,3 +24,13 @@ These are the steps I'm also trying. I tried them only for few hours. I'm readin
 * <a href="http://nbviewer.ipython.org/github/denadai2/Gas-consumption-outliers/blob/master/GES.ipynb">extreme studentized deviate (ESD)</a>
 * ARMA-ARIMA methods for time series
 * linear models - SVD comparison (in some days)
+
+Now I need to verify these hyphotesis/papers:
+-------------
+* [Focused backPropagation algorithm for pattern recognition](http://www.cs.colorado.edu/~mozer/Research/Selected%20Publications/reprints/Mozer1989.pdf)
+* [Hybrid ARIMA-NNs](cs.uni-muenster.de/Professoren/Lippe/diplomarbeiten/html/eisenbach/Untersuchte Artikel/Zhan03.pdf)
+* [A Feed-Forward Neural Networks-Based Nonlinear Autoregressive Model for Forecasting Time Series](http://www.scielo.org.mx/pdf/cys/v14n4/v14n4a8)
+* [Novel FTLRNN with Gamma Memory for Short-Term and Long-Term Predictions of Chaotic Time Series](http://www.hindawi.com/journals/acisc/2009/364532/)
+* [Gamma memory](http://scholar.google.com/scholar?q=http://dx.doi.org/10.1016/S0893-6080%2805%2980035-8): in order to not use Tapped delay memories
+* [An artificial neural network (p, d,q) model for timeseries forecasting](https://www.sciencedirect.com/science/article/pii/S0957417409004850)
+* [Recurrent NN](http://erikbern.com/?p=589)
