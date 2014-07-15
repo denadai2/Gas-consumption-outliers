@@ -3,10 +3,12 @@ import numpy as np
 
 from pybrain.datasets import SupervisedDataSet
 from pybrain.supervised.trainers import BackpropTrainer
-from pybrain.tools.validation import CrossValidator
+from pybrain.tools.validation import CrossValidator, ModuleValidator
 from pybrain.tools.shortcuts import buildNetwork
 import ml_metrics as metrics
 import argparse
+from numpy.random import permutation
+from numpy import array, array_split, concatenate
 
 def nonZeroValues(actual, predicted):
 
@@ -40,7 +42,7 @@ def mape(actual, predicted):
             The mean absolute percentage error between actual and predicted
 
     """
-    actual, predicted = nonZeroValues(actual, predicted)
+
     return np.mean(np.divide(np.abs(np.array(actual) - np.array(predicted)), np.array(actual))) * 100
 
 
@@ -94,7 +96,6 @@ parser.add_argument('filename', type=str, help='the filename to parse')
 parser.add_argument('--features', dest='nFeatures', type=int, default=10, help='sum the integers (default: 10)')
 parser.add_argument('--neurons', dest='nNeurons', type=int, default=60, help='number of neurons in the hidden layer (default: 60)')
 parser.add_argument('--epochs', dest='nEpochs', type=int, default=20, help='number of epochs to train the NN (default: 20)')
-parser.add_argument('--momentum', dest='momentum', type=int, default=0.01, help='Momentum value (default: 0.01)')
 args = parser.parse_args()
 
 #
@@ -105,8 +106,6 @@ nFeatures = args.nFeatures
 nOutput = 1
 nNeurons = args.nNeurons
 nEpochs = args.nEpochs
-
-momentum = args.momentum
 
 #
 # Read dataset
@@ -131,6 +130,7 @@ for sample in data:
     #
     DS.appendLinked(x, label)
 
+
 #
 # Divide the dataset in training set and test set
 #
@@ -142,16 +142,11 @@ print "Number of test patterns: ", len(tstdata)
 print "Input and output dimensions: ", trainData.indim, trainData.outdim
 print "number of units in hidden layer: ", nNeurons
 
-#
-# Build network with
-#
-n = buildNetwork(nFeatures, nNeurons, nOutput)
-trainer = BackpropTrainer( n, dataset=trainData, verbose=True,momentum=momentum)
 
 #
 # Training graph
 #
-graph = [("training", "test")]
+'''graph = [("training", "test")]
 for i in range(0,nEpochs):
     trainer.trainEpochs(1)
     predictedA, actualA = predict(n, trainData['input'], trainData['target'])
@@ -163,13 +158,47 @@ for i in range(0,nEpochs):
 
 with open('results/graphs/'+filename, 'w') as fp:
     a = csv.writer(fp, delimiter=',')
-    a.writerows(graph)
+    a.writerows(graph)'''
 
 
 #
 # Write the output of the final network
 #
-predictedA, actualA = predict(n, tstdata['input'], tstdata['target'])
+n_folds=5
+inp = DS.getField("input")
+tar = DS.getField("target")
+perms = array_split(permutation(DS.getLength()), n_folds)
+performances = 0
+for i in range(n_folds):
+    # determine train indices
+    train_perms_idxs = range(n_folds)
+    train_perms_idxs.pop(i)
+    temp_list = []
+    for train_perms_idx in train_perms_idxs:
+        temp_list.append(perms[ train_perms_idx ])
+    train_idxs = concatenate(temp_list)
+
+    # determine test indices
+    test_idxs = perms[i]
+
+    train_ds = SupervisedDataSet(nFeatures, nOutput)
+    train_ds.setField("input" , inp[train_idxs])
+    train_ds.setField("target" , tar[train_idxs])
+    #
+    # Build network with
+    #
+    n = buildNetwork(nFeatures, nNeurons, nOutput)
+    trainer = BackpropTrainer( n, dataset=train_ds, verbose=True,momentum=0.01)
+    trainer.trainEpochs(nEpochs)
+
+    predictedA, actualA = predict(n, inp[test_idxs], tar[test_idxs])
+    performances += metrics.rmse(actualA, predictedA)
+
+
+print "CROSSVALIDATOR: ", performances/n_folds
+
+
+'''predictedA, actualA = predict(n, tstdata['input'], tstdata['target'])
 
 print "MAPE: ", mape(actualA, predictedA)
 print "RMSE: ", metrics.rmse(actualA, predictedA)
@@ -180,6 +209,6 @@ data.extend(np.hstack([actualA, predictedA]))
 
 with open('results/'+filename, 'w') as fp:
     a = csv.writer(fp, delimiter=',')
-    a.writerows(data)
+    a.writerows(data)'''
 
 
